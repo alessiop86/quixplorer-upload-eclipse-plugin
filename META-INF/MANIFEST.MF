@@ -10,6 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core;bundle-version="3.9.1",
  org.eclipse.core.resources;bundle-version="3.8.101",
  org.eclipse.core.runtime.compatibility;bundle-version="3.2.200",
- org.eclipse.core.expressions;bundle-version="3.4.500"
+ org.eclipse.core.expressions;bundle-version="3.4.500",
+ org.eclipse.ui.forms;bundle-version="3.6.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
