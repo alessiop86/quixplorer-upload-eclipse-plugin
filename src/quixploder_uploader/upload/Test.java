@@ -43,22 +43,6 @@ public class Test {
 	}
 	
 	
-	public static void stampaResponse(HttpResponse res) throws IllegalStateException, IOException {
-		Header[] headers = res.getAllHeaders();
-		HttpEntity entity = res.getEntity();
 	
-		System.out.println("HEADERS");
-		for (int i = 0; i < headers.length; i++)
-			System.out.println(headers[i]);
-		
-		System.out.println("ENTITY");
-		
-		StringWriter writer = new StringWriter();
-		IOUtils.copy(entity.getContent(), writer, "UTF-8");
-		System.out.println(writer.toString());
-		
-		
-		
-	}
 
 }

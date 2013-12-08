@@ -22,7 +22,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import quixplorer_uploader.dialogs.MyTitleAreaDialog;
+import quixploder_uploader.upload.CopiaFileSuQuixplorer;
 import quixplorer_uploader.dialogs.DataDialog;
 
 public class UploaderHandler extends org.eclipse.core.commands.AbstractHandler {
@@ -35,7 +35,7 @@ public class UploaderHandler extends org.eclipse.core.commands.AbstractHandler {
 		String user, password, folder, folderFissa, url;
 
 		// carico gli ultimi valori usati
-		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode("quixplorer_uploader");
+		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
 		user = prefs.get("user", "");
 		password = prefs.get("password", "");		
 		folderFissa = prefs.get("folderFissa", "");
@@ -109,14 +109,21 @@ public class UploaderHandler extends org.eclipse.core.commands.AbstractHandler {
 				folderFissa = dialog2.getFolderFissa();
 				folder = dialog2.getFolder();
 				password = dialog2.getPassword();
+				
+				CopiaFileSuQuixplorer c = new CopiaFileSuQuixplorer();
+				
+				c.login(url, user, password);
+				
+				c.caricaFiles(folderFissa + folder, fileDaCaricare);
 
+				MessageDialog.openInformation(shell, "OK", "File caricati con successo.");
 			}
 
 		} catch (QuiXploderException e) {
 			MessageDialog.openError(shell, "ERRORE", e.getMessage());
 		}
 		
-		
+		//salvo per le chiamate successive per non dover ricompilare ogni volta la maschera
 		salvaStato(user, password, url, folderFissa);
 
 		return null;
@@ -139,11 +146,7 @@ public class UploaderHandler extends org.eclipse.core.commands.AbstractHandler {
 	private void salvaStato(String user, String password, String url, String folder) {
 
 		// saves plugin preferences at the workspace level
-		IEclipsePreferences prefs =
-		// Platform.getPreferencesService().getRootNode().node(Plugin.PLUGIN_PREFEERENCES_SCOPE).node(MY_PLUGIN_ID);
-		InstanceScope.INSTANCE.getNode("quixplorer_uploader"); // does all the
-																// above behind
-																// the scenes
+		IEclipsePreferences prefs =	InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
 
 		prefs.put("user", user);
 		prefs.put("password", password);
